@@ -1,0 +1,22 @@
+{
+  "id": "neodex.spirale",
+  "name": "Spirale",
+  "version": "1.0.0",
+  "author": "NDesumeur",
+  "description": "Jeu d'adresse : une balle rebondit sur les plateaux d'une tour en spirale dessinée en pixel art. Tourne la tour pour la faire tomber par les trous, évite les cases rouges, et enchaîne trois plateaux pour arriver lancée et tout casser. Des niveaux de plus en plus serrés, une arrivée dorée au fond. Meilleur niveau et meilleur score.",
+  "icon": "icon.png",
+  "entry": "index.js",
+  "view": "spirale",
+  "neobase": ">=4.0.0",
+  "type": "app",
+  "category": "Jeux",
+  "syncMode": "progression",
+  "syncInfo": "Record.",
+  "mobile": false,
+  "system": false,
+  "dependencies": {},
+  "sdk": "2.1.0",
+  "permissions": [
+    "storage"
+  ]
+}
