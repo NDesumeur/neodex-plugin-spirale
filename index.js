@@ -5,13 +5,15 @@ const HTML = `<div class="appWrap wide">
   <div class="gMain"><div class="gameBox"><canvas id="spCanvas" width="144" height="200" role="img" aria-label="Spirale"></canvas></div>
     <div class="gSide">
       <div class="sysCard"><b>RECORDS</b><div class="gStats" id="spStats"></div></div>
-      <div class="row"><button class="btn main" id="spNew">NOUVELLE PARTIE</button></div>
+      <div class="row"><button class="btn main" id="spNew">NOUVELLE PARTIE</button><button class="btn" id="spFs">PLEIN ÉCRAN</button></div>
       <div class="hint">Une balle rebondit sur les plateaux d'une tour. Tourne la tour pour amener un trou sous la balle : elle tombe au plateau suivant. Les cases rouges la cassent. Mais si elle traverse trois plateaux d'affilée, elle arrive LANCÉE et casse le plateau suivant, même rouge. Le plateau doré au fond finit le niveau. Plus on avance, plus les trous rapetissent et plus il y a de rouge.</div>
     </div></div>
 </div>`;
 const CSS = `.gMain{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap}
 .gameBox{display:grid;place-items:center;padding:10px;background:#05010b;flex:0 0 auto;position:relative}
-.gameBox canvas{height:min(72vh,640px);width:auto;aspect-ratio:144/200;image-rendering:pixelated;cursor:var(--cp,pointer);touch-action:none}
+.gameBox:fullscreen{padding:0}
+.gameBox:fullscreen canvas{height:100vh;max-width:100vw}
+.gameBox canvas{height:min(calc(100vh - 190px),900px);min-height:300px;max-width:100%;width:auto;aspect-ratio:144/200;image-rendering:pixelated;cursor:var(--cp,pointer);touch-action:none}
 .gSide{display:flex;flex-direction:column;gap:14px;flex:1;min-width:250px;max-width:420px}
 .gSide .sysCard{display:flex;flex-direction:column}
 .gStats{display:grid;grid-template-columns:1fr auto;gap:4px 14px}
@@ -288,7 +290,7 @@ export default async function (ctx) {
   view.innerHTML = HTML;
   pxSkin(view.querySelector('.appWrap'), { title: "SPIRALE", T: {"k": "#0c0a12", "k2": "#16121e", "fill": "#221c2c", "fillOn": "#2e263a", "hl": "#3a3046", "line": "#62566e", "acc": "#3ab8a8", "accL": "#b0f0e8", "accS": "#2a8a7e", "accD": "#0e2a26", "rivet": "#f0f0f8", "btn": "#3a3046", "btnHi": "#62566e", "btnLo": "#16121e", "btnHov": "#443852", "btnHovHi": "#82768e", "text": "#f4f0f8", "muted": "#c0b8cc", "acc2": "#7ee07a", "gold": "#ffd84a", "orange": "#ff8a3a", "red": "#ff4a3a", "green": "#7ee07a", "green2": "#2f8a3a", "bg": "#100c16", "bgDot": "#221c2c", "bgDot2": "#16121e", "spark": "#0e2a26", "spark2": "#3ab8a8", "tile": ["................", "...:............", "................", "..........+.....", "................", "................", ".....:..........", "................", "................", ".............:..", "................", "..+.............", "................", ".........:......", "................", "................"]},
   emblem: [".....kk.....", "....kwwk....", "..kkkwwkkk..", ".knnnwwnnnk.", "..kkkwwkkk..", ".....kook...", "..kkkwwkkk..", ".krrrwwnnnk.", "..kkkwwkkk..", ".....wwk....", "..kkkwwkkk..", ".kgggwwgggk."],
-  icons: [[/^NOUVELLE/, 'play'], [/^RECORDS/, 'crown']] });
+  icons: [[/^NOUVELLE/, 'play'], [/^RECORDS/, 'crown'], [/^PLEIN/, 'full']] });
   const $ = id => view.querySelector('#' + id) || document.getElementById(id);
   const doc = async n => { try { return await folder.read(n); } catch { return null; } };
   const games = { best: {}, ...(await doc('games')) };
@@ -416,7 +418,7 @@ function spDraw() {
   const total = sp.rings.length - 1; px(g, '#2a2236', 4, HUD + 3, W - 8, 3); px(g, pal[0], 4, HUD + 3, Math.round((W - 8) * Math.min(1, sp.passed / total)), 3);
   if (sp.mode === 'ready') gameText(g, W, [['SPIRALE', '#ffd84a', 12], ['← → : tourner la tour', '#ffffff'], ['Évite le rouge !', '#ff8a7a']], 80);
   if (sp.mode === 'pause') gameText(g, W, [['PAUSE', '#ffd84a', 12], ['Entrée : reprendre', '#b8b0c8']], 80);
-  if (sp.won > 30) gameText(g, W, [['NIVEAU ' + sp.level + ' FINI !', '#7ee07a', 12], [sp.score + ' points', '#ffffff'], [sp.won > 60 ? 'Espace : niveau suivant' : '', '#b8b0c8']], 80);
+  if (sp.won > 30) gameText(g, W, [['BRAVO !', '#7ee07a', 12], ['Niveau ' + sp.level + ' fini · ' + sp.score + ' points', '#ffffff'], [sp.won > 60 ? 'Espace : niveau suivant' : '', '#b8b0c8']], 80);
   if (sp.mode === 'over' && sp.dead > 30) gameText(g, W, [['CASSÉE !', '#ff4a3a', 12], ['Niveau ' + sp.level + ', ' + sp.score + ' points', '#ffffff'], [sp.record ? 'NOUVEAU RECORD !' : 'Record ' + (games.best['spirale-score'] || 0) + ' pts', '#ffd84a'], [sp.dead > 60 ? 'Espace : rejouer le niveau' : '', '#b8b0c8']], 80);
   if (sp.tick % 15 === 0) {  // pour les lecteurs d'écran (et le test) : où est le trou du prochain plateau
     const next = sp.rings.find(r => !r.broken && r.y > sp.y - .5), here = spCellAt(sp.rot); let side = 'aucun';
@@ -446,7 +448,7 @@ $('spNew').onclick = () => { spNew(sp?.level || sps.level); $('spNew').blur(); }
 {  // vérification : chaque plateau a un trou et des cases sûres à côté ; un joueur automatique qui vise les trous finit les niveaux 1, 5 et 12 ; le rouge casse la balle
   const bad = [], keep = sp, keepS = JSON.stringify(sps), keepB = [games.best.spirale, games.best['spirale-score']];
   spMute = true;
-  for (const lv of [1, 5, 12]) {
+  for (const lv of [1, 5, 12]) for (let essai = 0; essai < 3; essai++) {  // la tour est tirée au hasard : le joueur automatique a trois essais par niveau
     sp = null; spNew(lv); sp.mode = 'play';
     for (const r of sp.rings) if (!r.end && (!r.cells.includes(-1) || r.cells.filter(c => c === 0).length < 4)) bad.push('plateau ' + lv);
     for (let t = 0; t < 6000 && sp.mode === 'play' && !sp.won; t++) {
@@ -457,7 +459,7 @@ $('spNew').onclick = () => { spNew(sp?.level || sps.level); $('spNew').blur(); }
         if (soon) { if (next.cells[here] === 1) sp.keys.add(way([...idx(0), ...idx(-1)])); } else if (next.cells[here] !== -1) sp.keys.add(way(idx(-1))); }
       spUpdate();
     }
-    if (!sp.won) bad.push('niveau ' + lv + ' pas fini (' + sp.mode + ', ' + sp.passed + ')');
+    if (sp.won) break; if (essai === 2) bad.push('niveau ' + lv + ' pas fini (' + sp.mode + ', ' + sp.passed + ')');
   }
   sp = null; spNew(1); sp.mode = 'play'; const r1 = sp.rings[1]; r1.cells.fill(1); sp.rings[0].broken = 1; sp.rot = 0;
   for (let t = 0; t < 400 && sp.mode === 'play'; t++) spUpdate();
@@ -466,6 +468,7 @@ $('spNew').onclick = () => { spNew(sp?.level || sps.level); $('spNew').blur(); }
   Object.assign(sps, JSON.parse(keepS)); for (const [k, v] of [['spirale', keepB[0]], ['spirale-score', keepB[1]]]) { if (v === undefined) delete games.best[k]; else games.best[k] = v; }
   sp = keep; spMute = false;
 }
+$('spFs').onclick = () => { $('spFs').blur(); try { document.fullscreenElement ? document.exitFullscreen() : $('spCanvas').parentElement.requestFullscreen?.().catch(() => {}); } catch {} };
 ctx.onOpen(() => {
   if (!sp || !sp.g) { spNew(); sp.g = $('spCanvas').getContext('2d'); }
   gameLoop(sp, 'spirale', spUpdate, spDraw); spInfo();

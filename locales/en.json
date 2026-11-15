@@ -23,7 +23,7 @@
  "Ia": "Ia",
  "Ic": "Ic",
  "Id": "ID",
- "Jeu d'adresse : une balle rebondit sur les plateaux d'une tour en spirale dessinée en pixel art. Tourne la tour pour la faire tomber par les trous, évite les cases rouges, et enchaîne trois plateaux pour arriver lancée et tout casser. Des niveaux de plus en plus serrés, une arrivée dorée au fond. Meilleur niveau et meilleur score.": "Skill game: a ball bounces on the platforms of a spiral tower drawn in pixel art. Turn the tower to make it drop through the holes, avoid the red tiles, and chain three platforms to come in fast and smash through. Tighter and tighter levels, a golden finish at the bottom. Best level and best score.",
+ "Jeu d'adresse : une balle rebondit sur les plateaux d'une tour en spirale dessinée en pixel art. Tourne la tour pour la faire tomber par les trous, évite les cases rouges, et enchaîne trois plateaux pour arriver lancée et tout casser. Des niveaux de plus en plus serrés, une arrivée dorée au fond. Meilleur niveau et meilleur score. Bouton plein écran, et la tour grandit avec la fenêtre.": "Skill game: a ball bounces on the platforms of a spiral tower drawn in pixel art. Turn the tower to make it drop through the holes, avoid the red tiles, and chain three platforms to come in fast and smash through. Tighter and tighter levels, a golden finish at the bottom. Best level and best score. Full screen button, and the tower grows with the window.",
  "KAAKHDDDDDDDKSSK": "KAAKHDDDDDDDKSSK",
  "KAAKHHHHHHHHKSSK": "KAAKHHHHHHHHKSSK",
  "KAAKKKKKKKKKKSSK": "KAAKKKKKKKKKKSSK",
@@ -60,6 +60,7 @@
  "Oc": "Oc",
  "Od": "Od",
  "PAUSE": "PAUSE",
+ "PLEIN ÉCRAN": "FULL SCREEN",
  "Parties": "Games",
  "RECORDS": "BESTS",
  "Record": "Best",
@@ -84,5 +85,8 @@
  "à droite": "on the right",
  "à gauche": "on the left",
  "← → : tourner la tour": "← →: turn the tower",
- "← → ou glisser à la souris : tourner la tour · P : pause": "← → or drag with the mouse: turn the tower · P: pause"
+ "← → ou glisser à la souris : tourner la tour · P : pause": "← → or drag with the mouse: turn the tower · P: pause",
+ "BRAVO !": "WELL DONE!",
+ "Niveau ": "Level ",
+ " fini · ": " complete · "
 }
