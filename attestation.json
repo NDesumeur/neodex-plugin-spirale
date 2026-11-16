@@ -1,9 +1,9 @@
 {
   "pluginId": "neodex.spirale",
   "repo": "NDesumeur/neodex-plugin-spirale",
-  "version": "1.1.0",
-  "sha256": "7a6e006cd7fcfd2b287dd0a359e5c7a778cb6ce2c5f0dba7083f09bfd13257f7",
-  "approvedAt": "2026-11-16T04:14:39.783Z",
+  "version": "1.1.1",
+  "sha256": "92f5137b1e8ca834f8b9800df22b008ea59c01cef77db4ab43a1ea4a010a2b5e",
+  "approvedAt": "2026-11-16T16:38:51.841Z",
   "neobase": ">=4.0.0",
-  "signature": "BbD2XXktxieRFISIiLsk1TjSb0aMy85kbobBfYq0ixz23gGLKcGn6/58sKzZSB92u5IIKnVBY2DlmKEZvA53CQ=="
+  "signature": "6eF7sOUeAiYXfcP0V1MCYipwvILv9EpvD9XD3IhH2bZcAHlHi2Ep+GsS4KrWN9hpdWh42nVDBNzXWc/30ALaBQ=="
 }
