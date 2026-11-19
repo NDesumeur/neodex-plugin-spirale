@@ -64,7 +64,6 @@
  "Parties": "Games",
  "RECORDS": "BESTS",
  "Record": "Best",
- "Record.": "Best.",
  "SPIRALE": "SPIRAL",
  "Spirale": "Spiral",
  "Spirale : niveau": "Spiral: level",
@@ -88,5 +87,6 @@
  "← → ou glisser à la souris : tourner la tour · P : pause": "← → or drag with the mouse: turn the tower · P: pause",
  "BRAVO !": "WELL DONE!",
  "Niveau ": "Level ",
- " fini · ": " complete · "
+ " fini · ": " complete · ",
+ "Rien n'est synchronisé : tes records restent sur cet appareil.": "Nothing is synced: your records stay on this device."
 }
