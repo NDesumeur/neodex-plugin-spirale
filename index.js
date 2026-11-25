@@ -299,6 +299,9 @@ export default async function (ctx) {
   const best = (k, v) => { const b = games.best[k]; if (v > (b ?? 0)) {  // un score nul n'est jamais un record
     games.best[k] = v; saveGames(); return true; } return false; };
   const gstore = (k, init) => (games[k] ??= init);
+  // les trophées de NeoDex (3.4.8 et plus) : succès et records déclarés dans plugin.json ; sur un NeoDex plus ancien, rien ne se passe
+  const trophy = id => { ctx.games?.unlock(id).catch(() => {}); };
+  const trophyRecord = (id, v) => { if (v != null && Number.isFinite(+v)) ctx.games?.record(id, +v).catch(() => {}); };
 function gameLoop(st, appKey, update, draw) {
   cancelAnimationFrame(st.raf);
   const STEP = 1000 / 60; let acc = 0, last = performance.now();
@@ -427,6 +430,7 @@ function spDraw() {
   }
 }
 function spInfo() {
+  setTimeout(spTrophies);
   $('spStats').replaceChildren(...[['Meilleur niveau', games.best.spirale || 0], ['Meilleur score', games.best['spirale-score'] || 0], ['Niveaux finis', sps.levels], ['Parties', sps.games]].flatMap(([a, b]) => [el('span', '', a), el('b', '', String(b))]));
 }
 document.addEventListener('keydown', e => {
@@ -469,6 +473,12 @@ $('spNew').onclick = () => { spNew(sp?.level || sps.level); $('spNew').blur(); }
   sp = keep; spMute = false;
 }
 $('spFs').onclick = () => { $('spFs').blur(); try { document.fullscreenElement ? document.exitFullscreen() : $('spCanvas').parentElement.requestFullscreen?.().catch(() => {}); } catch {} };
+// les trophées, tirés des statistiques et des records gardés (aussi à l'ouverture : ce qui a été fait avant compte)
+function spTrophies() {
+  const b = games.best.spirale || 0, sc = games.best['spirale-score'] || 0, sig = [b, sc, sps.levels].join(); if (sig === spTrophies.sig) return; spTrophies.sig = sig;
+  trophyRecord('niveau', b || null); trophyRecord('score', sc || null);
+  if (sps.levels >= 1) trophy('n1'); if (b >= 10) trophy('n10'); if (b >= 25) trophy('n25'); if (b >= 50) trophy('n50'); if (sps.levels >= 100) trophy('cent');
+}
 ctx.onOpen(() => {
   if (!sp || !sp.g) { spNew(); sp.g = $('spCanvas').getContext('2d'); }
   gameLoop(sp, 'spirale', spUpdate, spDraw); spInfo();

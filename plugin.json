@@ -1,7 +1,7 @@
 {
   "id": "neodex.spirale",
   "name": "Spirale",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "author": "NDesumeur",
   "description": "Jeu d'adresse : une balle rebondit sur les plateaux d'une tour en spirale dessinée en pixel art. Tourne la tour pour la faire tomber par les trous, évite les cases rouges, et enchaîne trois plateaux pour arriver lancée et tout casser. Des niveaux de plus en plus serrés, une arrivée dorée au fond. Meilleur niveau et meilleur score. Bouton plein écran, et la tour grandit avec la fenêtre.",
   "icon": "icon.png",
@@ -10,7 +10,10 @@
   "neobase": ">=4.0.0",
   "type": "app",
   "category": "Jeux",
-  "compatibility": ["windows", "linux"],
+  "compatibility": [
+    "windows",
+    "linux"
+  ],
   "syncMode": "aucune",
   "syncInfo": "Rien n'est synchronisé : tes records restent sur cet appareil.",
   "mobile": false,
@@ -19,5 +22,47 @@
   "sdk": "2.1.0",
   "permissions": [
     "storage"
+  ],
+  "succes": [
+    {
+      "id": "n1",
+      "nom": "En bas de la tour",
+      "texte": "Finir un premier niveau"
+    },
+    {
+      "id": "n10",
+      "nom": "Vertige",
+      "texte": "Atteindre le niveau 10"
+    },
+    {
+      "id": "n25",
+      "nom": "Tour infernale",
+      "texte": "Atteindre le niveau 25"
+    },
+    {
+      "id": "n50",
+      "nom": "Spirale sans fin",
+      "texte": "Atteindre le niveau 50",
+      "cache": true
+    },
+    {
+      "id": "cent",
+      "nom": "Cent tours",
+      "texte": "Finir 100 niveaux en tout"
+    }
+  ],
+  "records": [
+    {
+      "id": "niveau",
+      "nom": "Meilleur niveau",
+      "sens": "haut",
+      "format": "nombre"
+    },
+    {
+      "id": "score",
+      "nom": "Meilleur score",
+      "sens": "haut",
+      "format": "nombre"
+    }
   ]
 }

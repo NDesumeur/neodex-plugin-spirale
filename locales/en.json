@@ -88,5 +88,15 @@
  "BRAVO !": "WELL DONE!",
  "Niveau ": "Level ",
  " fini · ": " complete · ",
- "Rien n'est synchronisé : tes records restent sur cet appareil.": "Nothing is synced: your records stay on this device."
+ "Rien n'est synchronisé : tes records restent sur cet appareil.": "Nothing is synced: your records stay on this device.",
+ "En bas de la tour": "Bottom of the tower",
+ "Finir un premier niveau": "Finish your first level",
+ "Vertige": "Vertigo",
+ "Atteindre le niveau 10": "Reach level 10",
+ "Tour infernale": "Tower of doom",
+ "Atteindre le niveau 25": "Reach level 25",
+ "Spirale sans fin": "Endless spiral",
+ "Atteindre le niveau 50": "Reach level 50",
+ "Cent tours": "A hundred towers",
+ "Finir 100 niveaux en tout": "Finish 100 levels in total"
 }
